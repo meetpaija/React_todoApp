@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DeleteTODO from './Delete TODO/DeleteTODO';
+import DeleteTODO from './DeleteTODO';
 import EditTODO from './EditTODO';
 class TodoListRow extends Component{
 
@@ -11,11 +11,12 @@ class TodoListRow extends Component{
     {
       return(
         <tr>
-      <td>{this.props.item.description}</td>
+          <td>{this.props.item.title}</td>
+        <td>{this.props.item.description}</td>
         <td>{this.props.item.createdon}</td>
         <td>{this.props.item.modifiedon}</td>
-        <td><button className="btn btn-primary btn-sm" id={this.props.item.id}>Edit</button></td>
-        <td><button className="btn btn-danger btn-sm" id={this.props.item.id}>Delete</button></td>
+        <EditTODO item={this.props.item}/>
+        <DeleteTODO item={this.props.item}/>
         </tr>  
        
       );
