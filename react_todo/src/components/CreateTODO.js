@@ -1,76 +1,66 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-
-class CreateTODO extends Component{
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types'
+import TodoForm from './TodoForm'
+import * as todoActions from '../actions/todoActions';
+class CreateTODO extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      titledes:'',
-      desc:''
+      todo: Object.assign({}, props.todo)
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   handleChange(event) {
-    this.setState({[event.target.id]: event.target.value});
+    const field = event.target.name;
+    let todo = Object.assign({}, this.state.todo);
+    todo[field] = event.target.value;
+    return this.setState({ todo: todo });
   };
 
-  handleSubmit(event){
-              let headers=new Headers();
-              headers.append('Content-Type', 'application/x-www-form-urlencoded');
-              headers.append('Accept', 'application/json');
-              headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-              headers.append('GET', 'POST', 'OPTIONS');
-              
-              let myDate =  moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-              
-              var details = {
-                'title': this.state.titledes,
-                'description':this.state.desc,
-                'createdon':myDate,
-                'modifiedon':myDate,
-              };
-              var formBody = [];
-              
-              for (var property in details) {
-                console.log(property);
-                console.log(details[property]);
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(details[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
-              }
-              formBody = formBody.join("&");
-              console.log(formBody);
-
-                fetch('http://localhost:8080/api/toDo?'+formBody, {
-                  method: "POST",
-                  headers: headers,
-                }).then((res) => {
-                  console.log("this is res", res.url)
-                }).catch((err) => {
-                  console.log(err)
-                })
-                event.preventDefault();
+  handleSubmit() {
+    this.props.actions.createTodo(this.state.todo);
+    this.context.router.push('/todos');
   }
 
-    render(){
-            return(
-                <div>
-                    <h1 className="header">Create toDo</h1><hr/>
-                              <div className="form-group">
-                                  <label>title</label>
-                                  <input type="text" id="titledes" className="form-control" value={this.state.titledes} onChange={this.handleChange} />
-                              </div>
-                              <div className="form-group">
-                                  <label >Description</label>
-                                  <textarea className="form-control" id="desc" onChange={this.handleChange} rows="3" value={this.state.desc}></textarea> 
-                              </div>
-                              <input type="button" onClick={this.handleSubmit} className="btn btn-info" value="Submit" />
-                </div>
-            );
-    }
+  render() {
+    return (
+    <div>
+      <TodoForm
+        onChange={this.handleChange}
+        onSave={this.handleSubmit}
+        todo={this.state.todo}
+      />
+      </div>
+    );
+  }
 }
 
-export default CreateTODO;
+
+CreateTODO.propTypes = {
+  todo: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
+};
+
+CreateTODO.contextTypes={
+  router: PropTypes.object
+}
+
+function mapStateToProps(state, ownProps) {
+  let todo = { title: '', description: '', createdon: '', modifiedon: '' };
+  return {
+    todo: todo
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(todoActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTODO);

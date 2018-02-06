@@ -1,9 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../src/css/index.css';
-import App from './components/App.js'
+import Routes from './routes';
+import {browserHistory} from 'react-router';
 import registerServiceWorker from './other js/registerServiceWorker';
-// import Axios from Axios;
+import './css/index.css'
+import {Provider} from 'react-redux'
+import configureStore from './store/configureStore'
+import {loadTodos} from './actions/todoActions'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store=configureStore();
+store.dispatch(loadTodos());
+
+ReactDOM.render( 
+<Provider store={store}>
+<Routes history={browserHistory}/> 
+</Provider>
+, document.getElementById('root'));
 registerServiceWorker();

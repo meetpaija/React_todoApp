@@ -1,26 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 import DeleteTODO from './DeleteTODO';
 import EditTODO from './EditTODO';
-class TodoListRow extends Component{
-
-  state={
-    EditClicked: false
-  }
-  
-    render()
-    {
-      return(
-        <tr>
-          <td>{this.props.item.title}</td>
-        <td>{this.props.item.description}</td>
-        <td>{this.props.item.createdon}</td>
-        <td>{this.props.item.modifiedon}</td>
-        <EditTODO item={this.props.item}/>
-        <DeleteTODO item={this.props.item}/>
-        </tr>  
-       
-      );
-    }
-  }
-
-  export default TodoListRow;
+const TodoListRow = ({todo}) => {
+  return (
+    <tr>
+      <td>{todo.title}</td>
+      <td>{todo.description}</td>
+      <td>{todo.createdon}</td>
+      <td>{todo.modifiedon}</td>
+      <EditTODO todo={todo} />
+      <DeleteTODO todo={todo} />
+    </tr>
+  );
+}
+TodoListRow.propTypes = {
+  todo: PropTypes.object.isRequired
+};
+export default TodoListRow;
