@@ -7,8 +7,6 @@ export const updateTodo=(todo)=>{
     headers.append('GET', 'PUT', 'OPTIONS');
     
     let myDate =  moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-    console.log("In UpdateTODO::",todo);
-
     var details = {
       'title': todo.title,
       'description':todo.description,
@@ -31,7 +29,6 @@ export const updateTodo=(todo)=>{
         method: "PUT",
         headers: headers,
       }).then((res) => {
-        console.log("this is res", res.url)
       }).catch((err) => {
         console.log(err)
       })

@@ -10,7 +10,7 @@ export const delTodoApi=(todo)=>{
                   method: "DELETE",
                   headers: headers,
                 }).then((res) => {
-                  console.log("this is res", res.url)
+                  console.log("Successfully deleted...todo::",todo.id )
                 }).catch((err) => {
                   console.log(err)
                 })

@@ -9,7 +9,7 @@ export function loadTodo(todos){
 
 export function createTodo(todo){
     addTodo(todo);
-    return{type:types.CREATE_TODO,todo}
+    return{type:types.CREATE_TODO,todo,}
 } 
 
 export function editTodo(todo){

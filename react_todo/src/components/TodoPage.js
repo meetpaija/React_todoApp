@@ -3,15 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import TodoList from './TodoList'
 import PropTypes from 'prop-types'
-import configureStore from '../store/configureStore'
-import {loadTodos} from '../actions/todoActions'
 import Header from '../common/Header'
 import * as todoActions from '../actions/todoActions';
 class TodoPage extends Component {
 
   render() {
-    const store=configureStore();
-    store.dispatch(loadTodos());
+    // const store=configureStore();
+    // store.dispatch(loadTodos());
     const todos = this.props.todos;
     return (
       <div className="container">

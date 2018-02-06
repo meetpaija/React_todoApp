@@ -27,7 +27,6 @@ class EditTODO extends React.Component {
   }
 
   render() {
-   // console.log("In EditTODO::",this.state.todo.id);
     return (
       <td><button className="btn btn-primary btn-sm" id={this.state.todo.id} data-toggle="modal" data-target={`#${this.state.todo.id}myModal`} >Edit</button>
         <div id={`${this.state.todo.id}myModal`} className="modal fade" role="dialog">

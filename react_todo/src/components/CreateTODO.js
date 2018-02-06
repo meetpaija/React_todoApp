@@ -24,7 +24,7 @@ class CreateTODO extends Component {
 
   handleSubmit() {
     this.props.actions.createTodo(this.state.todo);
-    this.context.router.push('/todos');
+   
   }
 
   render() {
